@@ -16,24 +16,18 @@ function initialize (){
 	//generate help command -> every command is in commandarr
 	var fs = require('fs');
 	fs.readFile('resources.txt', 'utf8', function(err, data) { //resources.txt file needed
-		console.log('alright lord')
 		if (err) throw err;
 		lineseparator = data.split('\n');
 		for(var line in lineseparator){
-			console.log('done line');
 			commandlist[line] = lineseparator[line].split('#');
 			commandhelp = commandhelp + commandlist[line][1] + " , ";
 		}
-		console.log(commandlist);
-		console.log(commandhelp);
 	});
 	
 	//login to server---------------------------------------------------------------
 	client.login('NTc3ODI2NzMwNzA2OTkzMTcy.XNqtyQ.JQ9zarqXs9SlUQZVwQC07mN3imI');
 	client.on('ready', () => {
 		if(i == 0){ //again, I said don't ask me why
-			console.log(`Logged in as ${client.user.tag}!`);
-			console.log(i);
 		i = 1;}
 	});
 }
@@ -52,7 +46,6 @@ client.on('message', msg => {
   //display help for users
   if (msg.content === '/help') {
     msg.reply("a besoin d'aide. Les commandes sont : " + commandhelp + " .");
-	console.log('help needed');
     }
 	
   //display proper card for a proper command
@@ -61,13 +54,11 @@ client.on('message', msg => {
 	var img //cause there is a stupid '\r' from nowhere
 	for(var index in commandlist){
 		if (msgcontent === commandlist[index][1]) { 
-			console.log(commandlist[index][2]);
 			img = commandlist[index][2];
 			img = img.replace(/(\r\n|\n|\r)/gm, ""); //remove stupid '\r'
 			msg.reply('joue la carte', {
 			files: [ img ] //contains image url
         }); 
-		console.log('card played');
 		break;
 		}
 	}
